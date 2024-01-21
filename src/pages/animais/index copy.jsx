@@ -2,41 +2,41 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../../services/api";
 
-export const Rebanhos = () => {
-  const [rebanhos, setRebanhos] = useState(null);
+export const Animais = () => {
+  const [animais, setAnimais] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    const loadRebanhos = async () => {
+    const loadAnimais = async () => {
       try {
         const response = await api.get(
-          `api/Rebanho?page=${currentPage}&pageSize=10`
+          `api/Animal?page=${currentPage}&pageSize=10`
         );
 
         if (response.data.error) {
           alert(response.data.error);
         } else {
-          setRebanhos(response.data);
+          setAnimais(response.data);
           setTotalPages(response.data.length);
         }
       } catch (error) {
-        console.error("Error fetching Rebanhos:", error);
+        console.error("Error fetching Animais:", error);
       }
     };
 
-    loadRebanhos();
+    loadAnimais();
   }, [currentPage]);
 
   useEffect(() => {
     // Log the updated state in the next render cycle
-    /* console.log("Rebanhos:", rebanhos);
+   /*  console.log("Animais:", animais);
     console.log("currentPage:", currentPage);
     console.log("totalPages:", totalPages); */
-  }, [rebanhos]);
+  }, [animais]);
 
   const handleNextPage = () => {
-    console.log("totalPages:", rebanhos.length);
+   /*  console.log("totalPages:", animais.length); */
     if (currentPage < totalPages) {
     setCurrentPage(currentPage + 1);
     }
@@ -44,7 +44,7 @@ export const Rebanhos = () => {
 
   const handlePrevPage = () => {
     setCurrentPage(currentPage - 1);
-    console.log("handlePrevPage:", currentPage);
+    /* console.log("handlePrevPage:", currentPage); */
     if (currentPage > 1) {
       // eslint-disable-next-line no-const-assign
       setCurrentPage(currentPage - 1);
@@ -53,9 +53,9 @@ export const Rebanhos = () => {
 
   return (
     <div>
-      <h1 className="fw-bold p-5">Rebanhos</h1>
+      <h1 className="fw-bold p-5">Animais</h1>
       <div className="container table-responsive">
-        {rebanhos ? (
+        {animais ? (
           <div>
             <table className=" table table-hover container-table">
               {/* ... (seu código de tabela) */}
@@ -65,25 +65,37 @@ export const Rebanhos = () => {
                     #
                   </th>
                   <th className="d-none d-md-table-cell fw-bold" scope="col">
+                    Brinco
+                  </th>                 
+                  <th className="d-none d-md-table-cell fw-bold" scope="col">
                     Rebanho
                   </th>
                   <th className="d-none d-md-table-cell fw-bold" scope="col">
-                    Descrição
-                  </th>
+                    Propriedade
+                  </th>                  
+                  <th className="d-none d-md-table-cell fw-bold" scope="col">
+                    Status
+                  </th>                  
+                  <th className="d-none d-md-table-cell fw-bold" scope="col">
+                    Pelagem
+                  </th>                  
                   <th className="d-none d-md-table-cell fw-bold" scope="col">
                     Ações
                   </th>
                 </tr>
               </thead>
               <tbody>
-                {rebanhos.map((rebanho) => (
-                  <tr key={rebanho.id}>
+                {animais.map((animal) => (
+                  <tr key={animal.id}>
                     <th className="d-sm-table-cell" scope="row">
-                      {rebanho.id}
+                      {animal.idanimal}
                     </th>
-                    <td className="d-sm-table-cell">{rebanho.nomeRebanho}</td>
-                    <td>{rebanho.descriRebanho}</td>
-                    <td>{rebanho.handle}</td>
+                    <td className="d-sm-table-cell">{animal.numeroBrincos}</td>
+                    <td>{animal.rebanho.nomeRebanho}</td>
+                    <td>{animal.propriedade}</td>
+                    <td>{animal.status}</td>
+                    <td>{animal.pelagem}</td>
+                    <td>{animal.handle}</td>
                   </tr>
                 ))}
               </tbody>
@@ -106,7 +118,7 @@ export const Rebanhos = () => {
             </div>
           </div>
         ) : (
-          <p>Loading Rebanhos...</p>
+          <p>Loading Animais...</p>
         )}
       </div>
     </div>

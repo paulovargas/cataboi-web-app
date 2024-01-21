@@ -18,7 +18,7 @@ export const Register = () => {
     };
 
     const response = await api.post("/create", data);
-    console.log("Dados : ", response);
+    /* console.log("Dados : ", response); */
   };
 
   return (
